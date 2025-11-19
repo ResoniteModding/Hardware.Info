@@ -93,9 +93,9 @@ namespace Hardware.Info.Linux
             // /sys/class/power_supply/BAT0/energy_now  = 22460000
             // /sys/class/power_supply/BAT0/capacity = 44                   // 44 % full        // 50610000 / 22460000 = 0,4437858130804189
             // /sys/class/power_supply/BAT0/capacity_level = Normal
-            // /sys/class/power_supply/BAT0/model_name = 
+            // /sys/class/power_supply/BAT0/model_name =
             // /sys/class/power_supply/BAT0/manufacturer = Sony Corp.
-            // /sys/class/power_supply/BAT0/serial_number = 
+            // /sys/class/power_supply/BAT0/serial_number =
 
             for (int i = 0; i < 10; i++)
             {
@@ -389,12 +389,12 @@ namespace Hardware.Info.Linux
             // 8        steal   Time stolen by other operating systems running in a virtual environment.
             // 9        guest   Time spent for running a virtual CPU or guest OS under the control of the kernel.
 
-            // > cat /proc/stat 
+            // > cat /proc/stat
             // cpu 1279636934 73759586 192327563 12184330186 543227057 56603 68503253 0 0
             // cpu0 297522664 8968710 49227610 418508635 72446546 56602 24904144 0 0
             // cpu1 227756034 9239849 30760881 424439349 196694821 0 7517172 0 0
             // cpu2 86902920 6411506 12412331 769921453 17877927 0 4809331 0 0
-            // ... 
+            // ...
 
             string[] cpuUsageLineLast = TryReadLinesFromFile("/proc/stat");
             Task.Delay(millisecondsDelayBetweenTwoMeasurements).Wait();
@@ -425,11 +425,11 @@ namespace Hardware.Info.Linux
         {
             char[] charSeparators = new char[] { ' ' };
 
-            // Get all columns but skip the first (which is the "cpu" string) 
+            // Get all columns but skip the first (which is the "cpu" string)
             List<string> cpuSumLineNow = cpuStatNow.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries).ToList();
             cpuSumLineNow.RemoveAt(0);
 
-            // Get all columns but skip the first (which is the "cpu" string) 
+            // Get all columns but skip the first (which is the "cpu" string)
             List<string> cpuSumLineLast = cpuStatLast.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries).ToList();
             cpuSumLineLast.RemoveAt(0);
 
@@ -449,7 +449,7 @@ namespace Hardware.Info.Linux
                     cpuSumLast += cpuLast;
             }
 
-            // Get the delta between two reads 
+            // Get the delta between two reads
             ulong cpuDelta = cpuSumNow - cpuSumLast;
 
             if (cpuDelta == 0)
@@ -457,7 +457,7 @@ namespace Hardware.Info.Linux
                 return 0; // avoid System.DivideByZeroException: Attempted to divide by zero.
             }
 
-            // Get the idle time Delta 
+            // Get the idle time Delta
             ulong cpuIdle = 0;
 
             if (cpuSumLineNow.Count > 3 && cpuSumLineLast.Count > 3)
@@ -468,7 +468,7 @@ namespace Hardware.Info.Linux
                 }
             }
 
-            // Calc percentage 
+            // Calc percentage
             ulong cpuUsed = cpuDelta - cpuIdle;
 
             return 100 * cpuUsed / cpuDelta;
@@ -490,7 +490,7 @@ namespace Hardware.Info.Linux
 
                 if (trimmed.StartsWith("*-cdrom") || trimmed.StartsWith("*-disk"))
                 {
-                    if(driveList.Count > 0 && disk == null && trimmed.StartsWith("*-disk"))
+                    if (driveList.Count > 0 && disk == null && trimmed.StartsWith("*-disk"))
                     {
                         disk = driveList.First();
                     }
@@ -599,7 +599,7 @@ namespace Hardware.Info.Linux
             P: Phys=LNXPWRBN/button/input0
             S: Sysfs=/devices/LNXSYSTM:00/LNXPWRBN:00/input/input0
             U: Uniq=
-            H: Handlers=kbd event0 
+            H: Handlers=kbd event0
             B: PROP=0
             B: EV=3
             B: KEY=10000000000000 0
@@ -609,7 +609,7 @@ namespace Hardware.Info.Linux
             P: Phys=LNXSLPBN/button/input0
             S: Sysfs=/devices/LNXSYSTM:00/LNXSLPBN:00/input/input1
             U: Uniq=
-            H: Handlers=kbd event1 
+            H: Handlers=kbd event1
             B: PROP=0
             B: EV=3
             B: KEY=4000 0 0
@@ -619,7 +619,7 @@ namespace Hardware.Info.Linux
             P: Phys=isa0060/serio0/input0
             S: Sysfs=/devices/platform/i8042/serio0/input/input2
             U: Uniq=
-            H: Handlers=sysrq kbd event2 leds 
+            H: Handlers=sysrq kbd event2 leds
             B: PROP=0
             B: EV=120013
             B: KEY=402000000 3803078f800d001 feffffdfffefffff fffffffffffffffe
@@ -631,7 +631,7 @@ namespace Hardware.Info.Linux
             P: Phys=LNXVIDEO/video/input0
             S: Sysfs=/devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A03:00/LNXVIDEO:00/input/input5
             U: Uniq=
-            H: Handlers=kbd event3 
+            H: Handlers=kbd event3
             B: PROP=0
             B: EV=3
             B: KEY=3e000b00000000 0 0 0
@@ -641,7 +641,7 @@ namespace Hardware.Info.Linux
             P: Phys=isa0060/serio1/input0
             S: Sysfs=/devices/platform/i8042/serio1/input/input4
             U: Uniq=
-            H: Handlers=mouse0 event4 
+            H: Handlers=mouse0 event4
             B: PROP=1
             B: EV=7
             B: KEY=1f0000 0 0 0 0
@@ -652,7 +652,7 @@ namespace Hardware.Info.Linux
             P: Phys=
             S: Sysfs=/devices/pci0000:00/0000:00:04.0/input/input7
             U: Uniq=
-            H: Handlers=mouse2 event6 js1 
+            H: Handlers=mouse2 event6 js1
             B: PROP=0
             B: EV=b
             B: KEY=10000 0 0 0 0
@@ -663,7 +663,7 @@ namespace Hardware.Info.Linux
             P: Phys=usb-0000:00:06.0-1/input0
             S: Sysfs=/devices/pci0000:00/0000:00:06.0/usb2/2-1/2-1:1.0/0003:80EE:0021.0006/input/input12
             U: Uniq=
-            H: Handlers=mouse1 event5 js0 
+            H: Handlers=mouse1 event5 js0
             B: PROP=0
             B: EV=1f
             B: KEY=1f0000 0 0 0 0
@@ -1107,6 +1107,34 @@ namespace Hardware.Info.Linux
             uint currentVerticalResolution = 0;
             uint currentRefreshRate = 0;
 
+            // xrandr -q
+            /*
+            Screen 0: minimum 320 x 200, current 1280 x 800, maximum 4096 x 4096
+            VGA1 disconnected (normal left inverted right x axis y axis)
+            LVDS1 connected 1280x800+0+0 inverted X and Y axis (normal left inverted right x axis y axis) 261mm x 163mm
+               1280x800       59.8*+
+               1024x768       60.0
+               800x600        60.3     56.2
+               640x480        59.9
+            DVI1 disconnected (normal left inverted right x axis y axis)
+            TV1 disconnected (normal left inverted right x axis y axis)
+
+            Screen 0: minimum 320 x 200, current 1440 x 900, maximum 8192 x 8192
+            VGA-1 disconnected (normal left inverted right x axis y axis)
+            LVDS-1 connected 1440x900+0+0 (normal left inverted right x axis y axis) 304mm x 190mm
+               1440x900       60.1*+
+               1024x768       60.0
+               800x600        60.3
+               640x480        59.9
+
+            Screen 0: minimum 320 x 200, current 3200 x 1080, maximum 8192 x 8192
+            VGA-1 disconnected (normal left inverted right x axis y axis)
+            HDMI-1 connected primary 1920x1080+0+0 (normal left inverted right x axis y axis) 531mm x 299mm
+               1920x1080     59.93 +  60.00*   50.00    59.94
+               1920x1080i    60.00    50.00    59.94
+               1680x1050     59.88
+            /**/
+
             string processOutput = ReadProcessOutput("xrandr", "-q");
 
             string[] lines = processOutput.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
@@ -1153,82 +1181,114 @@ namespace Hardware.Info.Linux
                 }
             }
 
-            // xrandr -q
-
+            // lspci -D
             /*
-            Screen 0: minimum 320 x 200, current 1280 x 800, maximum 4096 x 4096
-            VGA1 disconnected (normal left inverted right x axis y axis)
-            LVDS1 connected 1280x800+0+0 inverted X and Y axis (normal left inverted right x axis y axis) 261mm x 163mm
-               1280x800       59.8*+
-               1024x768       60.0
-               800x600        60.3     56.2
-               640x480        59.9
-            DVI1 disconnected (normal left inverted right x axis y axis)
-            TV1 disconnected (normal left inverted right x axis y axis)
-
-            Screen 0: minimum 320 x 200, current 1440 x 900, maximum 8192 x 8192
-            VGA-1 disconnected (normal left inverted right x axis y axis)
-            LVDS-1 connected 1440x900+0+0 (normal left inverted right x axis y axis) 304mm x 190mm
-               1440x900       60.1*+
-               1024x768       60.0
-               800x600        60.3
-               640x480        59.9
-
-            Screen 0: minimum 320 x 200, current 3200 x 1080, maximum 8192 x 8192
-            VGA-1 disconnected (normal left inverted right x axis y axis)
-            HDMI-1 connected primary 1920x1080+0+0 (normal left inverted right x axis y axis) 531mm x 299mm
-               1920x1080     59.93 +  60.00*   50.00    59.94  
-               1920x1080i    60.00    50.00    59.94  
-               1680x1050     59.88  
+            0000:00:00.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Phoenix Root Complex
+            0000:00:00.2 IOMMU: Advanced Micro Devices, Inc. [AMD] Phoenix IOMMU
+            0000:00:01.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge
+            0000:00:02.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge
+            0000:00:02.2 PCI bridge: Advanced Micro Devices, Inc. [AMD] Phoenix GPP Bridge
+            0000:00:02.4 PCI bridge: Advanced Micro Devices, Inc. [AMD] Phoenix GPP Bridge
+            0000:00:03.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge
+            0000:00:03.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Family 19h USB4/Thunderbolt PCIe tunnel
+            0000:00:04.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge
+            0000:00:04.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Family 19h USB4/Thunderbolt PCIe tunnel
+            0000:00:08.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Host Bridge
+            0000:00:08.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Phoenix Internal GPP Bridge to Bus [C:A]
+            0000:00:08.2 PCI bridge: Advanced Micro Devices, Inc. [AMD] Phoenix Internal GPP Bridge to Bus [C:A]
+            0000:00:08.3 PCI bridge: Advanced Micro Devices, Inc. [AMD] Phoenix Internal GPP Bridge to Bus [C:A]
+            0000:00:14.0 SMBus: Advanced Micro Devices, Inc. [AMD] FCH SMBus Controller (rev 71)
+            0000:00:14.3 ISA bridge: Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge (rev 51)
+            0000:00:18.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 0
+            0000:00:18.1 Host bridge: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 1
+            0000:00:18.2 Host bridge: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 2
+            0000:00:18.3 Host bridge: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 3
+            0000:00:18.4 Host bridge: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 4
+            0000:00:18.5 Host bridge: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 5
+            0000:00:18.6 Host bridge: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 6
+            0000:00:18.7 Host bridge: Advanced Micro Devices, Inc. [AMD] Phoenix Data Fabric; Function 7
+            0000:01:00.0 Network controller: MEDIATEK Corp. MT7922 802.11ax PCI Express Wireless Network Adapter
+            0000:02:00.0 Non-Volatile memory controller: Sandisk Corp WD Black SN850X NVMe SSD (rev 01)
+            0000:c1:00.0 VGA compatible controller: Advanced Micro Devices, Inc. [AMD/ATI] Phoenix1 (rev c4)
+            0000:c1:00.1 Audio device: Advanced Micro Devices, Inc. [AMD/ATI] Radeon High Definition Audio Controller [Rembrandt/Strix]
+            0000:c1:00.2 Encryption controller: Advanced Micro Devices, Inc. [AMD] Phoenix CCP/PSP 3.0 Device
+            0000:c1:00.3 USB controller: Advanced Micro Devices, Inc. [AMD] Device 15b9
+            0000:c1:00.4 USB controller: Advanced Micro Devices, Inc. [AMD] Device 15ba
+            0000:c1:00.5 Multimedia controller: Advanced Micro Devices, Inc. [AMD] Audio Coprocessor (rev 63)
+            0000:c1:00.6 Audio device: Advanced Micro Devices, Inc. [AMD] Family 17h/19h/1ah HD Audio Controller
+            0000:c2:00.0 Non-Essential Instrumentation [1300]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function
+            0000:c2:00.1 Signal processing controller: Advanced Micro Devices, Inc. [AMD] AMD IPU Device
+            0000:c3:00.0 Non-Essential Instrumentation [1300]: Advanced Micro Devices, Inc. [AMD] Phoenix Dummy Function
+            0000:c3:00.3 USB controller: Advanced Micro Devices, Inc. [AMD] Device 15c0
+            0000:c3:00.4 USB controller: Advanced Micro Devices, Inc. [AMD] Device 15c1
+            0000:c3:00.5 USB controller: Advanced Micro Devices, Inc. [AMD] Pink Sardine USB4/Thunderbolt NHI controller #1
+            0000:c3:00.6 USB controller: Advanced Micro Devices, Inc. [AMD] Pink Sardine USB4/Thunderbolt NHI controller #2
             /**/
 
-            processOutput = ReadProcessOutput("lspci", string.Empty);
+            processOutput = ReadProcessOutput("lspci", "-D");
 
             lines = processOutput.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (string line in lines.Where(l => l.Contains("VGA compatible controller") || l.Contains("3D controller") || l.Contains("Display controller")))
             {
+                int spaceIdx = line.IndexOf(' ');
+                string busId = line.Substring(0, spaceIdx);
+
                 string[] split = line.Split(':');
+                if (split.Length < 4)
+                    continue;
 
-                if (split.Length > 2)
+                string relevant = split[3].Trim();
+                if (string.IsNullOrWhiteSpace(relevant))
+                    continue;
+
+                string vendor = string.Empty;
+                ulong vram = 0;
+
+                if (relevant.Contains("Intel"))
                 {
-                    string relevant = split[2].Trim();
+                    vendor = "Intel Corporation";
 
-                    if (!string.IsNullOrWhiteSpace(relevant))
-                    {
-                        string vendor = string.Empty;
-
-                        if (relevant.Contains("Intel"))
-                        {
-                            vendor = "Intel Corporation";
-                        }
-                        else if (relevant.Contains("AMD") || relevant.Contains("Advanced Micro Devices") || relevant.Contains("ATI"))
-                        {
-                            vendor = "Advanced Micro Devices, Inc.";
-                        }
-                        else if (relevant.ToUpperInvariant().Contains("NVIDIA"))
-                        {
-                            vendor = "NVIDIA Corporation";
-                        }
-
-                        string name = relevant.Replace("[AMD/ATI]", string.Empty);
-
-                        if (!string.IsNullOrEmpty(vendor))
-                            name = name.Replace(vendor, string.Empty);
-
-                        VideoController gpu = new VideoController
-                        {
-                            Description = relevant,
-                            Manufacturer = vendor,
-                            Name = name,
-                            CurrentHorizontalResolution = currentHorizontalResolution,
-                            CurrentVerticalResolution = currentVerticalResolution,
-                            CurrentRefreshRate = currentRefreshRate
-                        };
-
-                        videoControllerList.Add(gpu);
-                    }
+                    // TODO: Implement Intel GPU VRAM detection
+                    // The methodology here will likely have to be different for each of the i915, Xe, and Arc drivers
                 }
+                else if (relevant.Contains("AMD") || relevant.Contains("Advanced Micro Devices") || relevant.Contains("ATI"))
+                {
+                    vendor = "Advanced Micro Devices, Inc.";
+
+                    // Read the VRAM total as bytes from sysfs
+                    ulong vramTotal = TryReadLongFromFile($"/sys/bus/pci/devices/{busId}/mem_info_vram_total");
+                    ulong gttTotal = TryReadLongFromFile($"/sys/bus/pci/devices/{busId}/mem_info_gtt_total");
+                    vram = Math.Max(vramTotal, gttTotal);
+                }
+                else if (relevant.ToUpperInvariant().Contains("NVIDIA"))
+                {
+                    vendor = "NVIDIA Corporation";
+
+                    // TODO: Implement Nvidia GPU VRAM detection
+                    // This could potentially use NVML as a native library, or use the nvidia-smi CLI tool
+                    // (usually shipped with both the proprietary and open Nvidia drivers).
+                    // Sample command: nvidia-smi --query-gpu=memory.total --format=noheader,nounits
+                    // Nouveau would likely need different methodology.
+                }
+
+                string name = relevant.Replace("[AMD/ATI]", string.Empty);
+
+                if (!string.IsNullOrEmpty(vendor))
+                    name = name.Replace(vendor, string.Empty);
+
+                VideoController gpu = new VideoController
+                {
+                    Description = relevant,
+                    Manufacturer = vendor,
+                    Name = name,
+                    CurrentHorizontalResolution = currentHorizontalResolution,
+                    CurrentVerticalResolution = currentVerticalResolution,
+                    CurrentRefreshRate = currentRefreshRate,
+                    AdapterRAM = vram,
+                };
+
+                videoControllerList.Add(gpu);
             }
 
             return videoControllerList;
